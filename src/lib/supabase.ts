@@ -1,7 +1,18 @@
 import { createClient } from '@supabase/supabase-js'
 
-const url = import.meta.env.VITE_SUPABASE_URL as string | undefined
-const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined
+const rawUrl = (import.meta.env.VITE_SUPABASE_URL as string | undefined)?.trim()
+
+/** Ne garde que https://xxxx.supabase.co, même si l'adresse a été copiée avec /rest/v1/ au bout. */
+function projectOrigin(value: string | undefined): string | undefined {
+  if (!value) return undefined
+  try {
+    return new URL(/^https?:\/\//.test(value) ? value : `https://${value}`).origin
+  } catch {
+    return undefined
+  }
+}
+const url = projectOrigin(rawUrl)
+const anonKey = (import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined)?.trim()
 
 /** false tant que les variables VITE_SUPABASE_* ne sont pas renseignées. */
 export const supabaseConfigured = Boolean(url && anonKey)
