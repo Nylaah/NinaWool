@@ -1,0 +1,118 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-display: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Nunito Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --color-cream: #faf5ec;
+  --color-paper: #fffdf8;
+  --color-line: #eadfcf;
+  --color-ink: #33272a;
+  --color-ink-soft: #6e5d60;
+
+  --color-rose: #b8405e;
+  --color-rose-deep: #96304a;
+  --color-rose-mid: #d4607a;
+  --color-rose-soft: #fae3e8;
+
+  --color-sage: #4f7a5b;
+  --color-sage-soft: #e2eee4;
+  --color-honey: #b07a10;
+  --color-honey-mid: #e2a632;
+  --color-honey-soft: #fbefd2;
+  --color-sky: #3f6f93;
+  --color-sky-soft: #e1edf5;
+  --color-plum: #7a4b8c;
+  --color-plum-soft: #f0e4f4;
+  --color-stone: #6b6460;
+  --color-stone-soft: #ece7e1;
+
+  --shadow-soft: 0 1px 2px rgb(51 39 42 / 0.05), 0 8px 24px -12px rgb(51 39 42 / 0.18);
+}
+
+@layer base {
+  html {
+    background: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    min-height: 100dvh;
+    /* trame très légère façon maille */
+    background-image: radial-gradient(rgb(184 64 94 / 0.06) 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    letter-spacing: -0.01em;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-rose);
+    outline-offset: 2px;
+  }
+  input[type='range'] {
+    accent-color: var(--color-rose);
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full px-5 py-2 text-[15px] font-bold transition select-none disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply bg-rose hover:bg-rose-deep text-white shadow-sm active:translate-y-px;
+  }
+  .btn-outline {
+    @apply border-line bg-paper text-ink hover:border-rose-mid hover:text-rose border-2;
+  }
+  .btn-ghost {
+    @apply text-ink-soft hover:bg-rose-soft hover:text-rose-deep;
+  }
+  .btn-danger {
+    @apply text-rose-deep hover:bg-rose-soft border-2 border-transparent;
+  }
+  .btn-sm {
+    @apply min-h-9 px-3.5 py-1 text-sm;
+  }
+  .card {
+    @apply border-line bg-paper shadow-soft rounded-3xl border;
+  }
+  /* liseré « point de couture » */
+  .stitch {
+    @apply relative;
+  }
+  .stitch::after {
+    content: '';
+    @apply border-rose-mid/35 pointer-events-none absolute inset-1.5 rounded-[1.15rem] border-2 border-dashed;
+  }
+  .label {
+    @apply text-ink mb-1.5 block text-sm font-bold;
+  }
+  .hint {
+    @apply text-ink-soft mt-1.5 text-sm;
+  }
+  .input {
+    @apply border-line bg-paper text-ink placeholder:text-ink-soft/60 focus:border-rose-mid w-full rounded-2xl border-2 px-4 py-2.5 text-base transition outline-none;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-extrabold whitespace-nowrap;
+  }
+  .eyebrow {
+    @apply text-rose text-xs font-extrabold tracking-[0.18em] uppercase;
+  }
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
